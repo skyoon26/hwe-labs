@@ -1,3 +1,6 @@
+import os
+os.environ["SPARK_LOCAL_IP"] = "127.0.0.1"
+
 from pyspark.sql import SparkSession
 
 ### Setup: Create a SparkSession
@@ -39,7 +42,7 @@ spark.sql("SELECT product_category FROM reviews").show(n=50, truncate=False)
 # Question 7: Find the most helpful review in the dataframe - the one with the highest number of helpful votes.
 # What is the product title for that review? How many helpful votes did it have?
 spark.sql(
-    "SELECT product_title, helpful_votes FROM reviews ORDER BY helpful_votes DESC"
+    "SELECT product_title, cast(helpful_votes as int) FROM reviews ORDER BY helpful_votes DESC"
 ).show(n=1, truncate=False)
 
 # Question 8: How many reviews exist in the dataframe with a 5 star rating?
